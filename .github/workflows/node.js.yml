@@ -51,11 +51,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Trivy
-        uses: aquasecurity/trivy-action@0.28.0
-
       - name: Trivy FS Scan (Source Code)
-        run: trivy fs --exit-code 1 --severity CRITICAL,HIGH . --format sarif --output trivy-results.sarif
+        uses: aquasecurity/trivy-action@v0.16.0
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+          exit-code: '1'
 
       - name: Upload Trivy Scan Results
         uses: actions/upload-artifact@v4
