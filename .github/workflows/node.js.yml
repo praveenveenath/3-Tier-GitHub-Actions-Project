@@ -42,10 +42,6 @@ jobs:
         with:
           args: "--verbose --redact --report-path=gitleaks-report.json --exit-code=1"
         
-      - name: Upload Gitleaks Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: gitleaks-report
       
       
 
