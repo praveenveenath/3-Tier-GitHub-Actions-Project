@@ -69,7 +69,7 @@ jobs:
           path: trivy-report.json
 
   sonar-frontend:
-    runs-on: Agent-1
+    runs-on: nonprod
     needs: trivy_fs_scan
     steps:
       - name: Checkout code
@@ -89,7 +89,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   sonar-backend:
-    runs-on: Agent-1
+    runs-on: nonprod
     needs: sonar-frontend
     steps:
       - name: Checkout code
