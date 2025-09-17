@@ -61,7 +61,11 @@ jobs:
           severity: 'CRITICAL,HIGH'
           cache: 'true'
           exit-code: '0'
-
+      - name: Upload Trivy Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-report
+          path: trivy-report.json
 
 
 
