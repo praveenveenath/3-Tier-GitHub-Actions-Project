@@ -46,13 +46,13 @@ jobs:
   
   trivy-scan:
     runs-on: ubuntu-latest
-    needs: build
+    needs: gitleaks-scan
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@v0.16.0
+        uses: aquasecurity/trivy-action@0.28.0
 
       - name: Trivy FS Scan (Source Code)
         run: trivy fs --exit-code 1 --severity CRITICAL,HIGH . --format sarif --output trivy-results.sarif
