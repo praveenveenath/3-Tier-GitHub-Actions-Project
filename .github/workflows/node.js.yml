@@ -32,16 +32,17 @@ jobs:
   gitleaks-scan:
     runs-on: nonprod
     needs: build
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Gitleaks Scan
-        uses: zricethezav/gitleaks-action@v1.3.0
-        with:
-          args: "--verbose --redact --report-path=gitleaks-report.json --exit-code=1"
-        
-      
+      - name: Gitleaks Setup
+        uses: gitleaks/gitleaks-action@v2
+
+      - name: Gitleaks Scan
+        run: |
+          gitleaks detect --source ./client --exit-code 1
+          gitleaks detect --source ./api --exit-code 1
+
       
 
