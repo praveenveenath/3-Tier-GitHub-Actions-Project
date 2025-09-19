@@ -153,5 +153,5 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: adijaiswal/frontend:latest
+          tags: praveen200497/frontend:latest
           file: ./client/Dockerfile
