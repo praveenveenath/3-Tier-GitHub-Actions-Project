@@ -2,7 +2,7 @@ name: New github actiontesting
 
 on: 
   push: 
-    branches: [ "main" ]
+    branches: [ "main", "dev", "qa" ]
   pull_request:
     branches: [ "main" ] 
 
@@ -69,6 +69,7 @@ jobs:
           path: trivy-report.json
 
   sonar-frontend:
+    if: github.ref == 'refs/heads/dev'
     runs-on: nonprod
     needs: trivy_fs_scan
     steps:
@@ -89,6 +90,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
   sonar-backend:
+    if: github.ref == 'refs/heads/dev'
     runs-on: nonprod
     needs: sonar-frontend
     steps:
@@ -157,6 +159,7 @@ jobs:
           file: ./client/Dockerfile
   
   trivy_image_scan:
+    if: github.ref == 'refs/heads/qa'
     runs-on: nonprod
     needs: build_frontend_docker_image_and_push   # or whatever job built/pushed your image
     steps:
@@ -202,7 +205,7 @@ jobs:
       with:
         version: latest
     - name: Update kubeconfig
-      run: aws eks update-kubeconfig --region ap-south-1 --name ekstesitng
+      run: aws eks update-kubeconfig --region ap-south-1 --name ekstesting
     - name: Deploy to EKS
       run: |
         kubectl apply -f k8s-prod/sc.yaml 
