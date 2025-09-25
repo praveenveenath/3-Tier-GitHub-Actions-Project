@@ -199,7 +199,7 @@ jobs:
       - name: Checkout CD repository
         uses: actions/checkout@v4
         with:
-          repository: praveen200497/3-Tier-GitHub-cd
+          repository: praveenveenath/3-Tier-GitHub-cd
           ref: dev                     # 👈 branch to checkout
           token: ${{ secrets.CD_REPO_TOKEN }}   # 👈 token with write access to the CD repo
           path: cd-repo
