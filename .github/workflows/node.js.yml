@@ -202,10 +202,10 @@ jobs:
           repository: praveenveenath/3-Tier-GitHub-cd
           ref: main                     # 👈 branch to checkout
           token: ${{ secrets.CD_REPO_TOKEN }}   # 👈 token with write access to the CD repo
-          path: cd-repo
+          path: cd
       - name: Update Kubernetes manifests with new image tags
         run: |
-          cd-repo
+          cd
           sed -i 's|praveen200497/backend:.*|praveen200497/backend:${{ env.IMAGE_TAG }}|g' k8s-prod/backend.yaml
           sed -i 's|praveen200497/frontend:.*|praveen200497/frontend:${{ env.IMAGE_TAG }}|g' k8s-prod/frontend.yaml
           git config --global user.name 'praveen200497'
