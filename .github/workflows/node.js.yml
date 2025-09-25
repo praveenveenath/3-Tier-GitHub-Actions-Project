@@ -4,7 +4,10 @@ on:
   push: 
     branches: [ "main", "dev", "qa" ]
   pull_request:
-    branches: [ "main" ] 
+    branches: [ "main", "dev", "qa" ]
+
+env:
+  IMAGE_TAG: ${ { github.sha } }
 
 jobs:
   build:
@@ -131,7 +134,7 @@ jobs:
         with:
           context: ./api  
           push: true
-          tags: praveen200497/backend:latest
+          tags: praveen200497/backend:${{ env.IMAGE_TAG }}
           file: ./api/Dockerfile
   
   build_frontend_docker_image_and_push:
@@ -155,7 +158,7 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: praveen200497/frontend:latest
+          tags: praveen200497/frontend:${{ env.IMAGE_TAG }}
           file: ./client/Dockerfile
   
   trivy_image_scan:
@@ -170,7 +173,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: image               # 👈 scan container image
-          image-ref: praveen200497/backend:latest
+          image-ref: praveen200497/backend:${{ env.IMAGE_TAG }}
           format: table
           exit-code: '0'                 
           ignore-unfixed: true
@@ -181,7 +184,7 @@ jobs:
         uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: image               # 👈 scan container image
-          image-ref: praveen200497/frontend:latest
+          image-ref: praveen200497/frontend:${{ env.IMAGE_TAG }}
           format: table
           exit-code: '0'              
           ignore-unfixed: true
